@@ -3,11 +3,18 @@ import { CardsContainer, Image, Title } from "../../styled/styled";
 import Catalogo from "../../catalogo/catalogo";
 import Icon from 'react-native-vector-icons/AntDesign'
 import IconOct from 'react-native-vector-icons/Octicons'
-import { useEffect, useState } from 'react';
+import { useContext, useState } from 'react';
+import { useNavigation } from "@react-navigation/native";
+import { Context } from "../../context/provider";
 
 const { width } = Dimensions.get("window")
 
 const Home = () => {
+
+
+    const { setDataArray } = useContext(Context)
+
+    const Navigation = useNavigation()
 
     const [icon, setIcon] = useState(true)
     const [search, setSearch] = useState([])
@@ -82,7 +89,7 @@ const Home = () => {
         }).start();
         setTimeout(() => {
             setIcon(false)
-        }, 200)
+        }, 300)
     }
 
     function onOutSearch() {
@@ -90,13 +97,11 @@ const Home = () => {
             toValue: 30,
             useNativeDriver: false,
         }).start();
-        setTimeout(() => {
-            setIcon(true)
-        }, 200)
+        setIcon(true)
     }
 
     return (
-        <ScrollView>
+        <ScrollView style={{ backgroundColor: '#282828' }}>
 
             <View>
                 <View style={{
@@ -178,23 +183,29 @@ const Home = () => {
 
                         search.map((e) => {
                             return (
-                                <View style={[styles.card, { backgroundColor: e.color }]} key={e.id}>
+                                <TouchableOpacity onPress={() => {
+                                    Navigation.navigate('Detail')
+                                    setDataArray(e)
+                                }} style={[styles.card, { backgroundColor: e.color }]} key={e.id}>
                                     <Image source={e.img} />
                                     <Title>
                                         {e.nome}
                                     </Title>
-                                </View>
+                                </TouchableOpacity>
                             )
                         })
                         :
                         Catalogo.map((e) => {
                             return (
-                                <View style={[styles.card, { backgroundColor: e.color }]} key={e.id}>
+                                <TouchableOpacity onPress={() => {
+                                    Navigation.navigate('Detail')
+                                    setDataArray(e)
+                                }} style={[styles.card, { backgroundColor: e.color }]} key={e.id}>
                                     <Image source={e.img} />
                                     <Title>
                                         {e.nome}
                                     </Title>
-                                </View>
+                                </TouchableOpacity>
                             )
                         })
 
