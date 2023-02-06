@@ -65,6 +65,8 @@ const Home = () => {
             onPress={() => {
                 filtarArr(title)
                 onClickItem(item, index)
+                onOutSearch()
+
             }}
             style={[styles.containerCategoria, { width: item.selected ? 140 : 130, height: item.selected ? 70 : 60 }]}>
             <Text style={[styles.text, { color: item.selected ? '#FF002E' : '#fff', fontSize: item.selected ? 18 : 16 }]}>{title}</Text>
@@ -129,7 +131,8 @@ const Home = () => {
                                 backgroundColor: "#FF002E",
                             }} />
 
-                        <TouchableOpacity
+                        <TouchableHighlight
+                            underlayColor="#FF002E"
                             onPress={() => onSearch()}
                             style={{
                                 top: -6,
@@ -150,7 +153,7 @@ const Home = () => {
                                     :
                                     <Icon name="close" size={31} color={'#fff'} onPress={() => onOutSearch()} />
                             }
-                        </TouchableOpacity>
+                        </TouchableHighlight>
 
                     </Animated.View>
 
@@ -186,7 +189,8 @@ const Home = () => {
                                 <TouchableOpacity onPress={() => {
                                     Navigation.navigate('Detail')
                                     setDataArray(e)
-                                }} style={[styles.card, { backgroundColor: e.color }]} key={e.id}>
+                                    onOutSearch()
+                                }} style={[styles.card, { backgroundColor: search.length != 0 ? '#232323' : e.color }]} key={e.id}>
                                     <Image source={e.img} />
                                     <Title>
                                         {e.nome}
@@ -200,6 +204,7 @@ const Home = () => {
                                 <TouchableOpacity onPress={() => {
                                     Navigation.navigate('Detail')
                                     setDataArray(e)
+                                    onOutSearch()
                                 }} style={[styles.card, { backgroundColor: e.color }]} key={e.id}>
                                     <Image source={e.img} />
                                     <Title>
